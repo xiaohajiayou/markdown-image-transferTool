@@ -1,0 +1,19 @@
+{
+	"markdown-image-transfer.menuName": "文件迁移",
+	"markdown-image-transfer.menuAnalyze": "分析图片链接",
+	"markdown-image-transfer.menuClean": "清理图片目录",
+	"markdown-image-transfer.menuDownload": "下载全部",
+	"markdown-image-transfer.menuUpload": "上传所选图片",
+	"markdown-image-transfer.menuMoveLocalImage": "移动本地图片",
+
+	"markdown-image-transfer.hasBracket": "图片路径中是否包括右括号",
+	"markdown-image-transfer.imageSaveFolder": "图片要保存到的位置,默认以md文件名做文件夹，支持绝对路径和相对路径，支持文件名<filename>和日期<YYYYMMDD>变量(dayjs)",
+	"markdown-image-transfer.updateLink": "上传/下载/移动时是否需要更新md文件的图片链接",
+	"markdown-image-transfer.skipSelectChange": "当光标或选择范围改变后是否依然更新图片链接",
+	"markdown-image-transfer.rename": "上传/下载/移动图片时是否需要重命名图片",
+	"markdown-image-transfer.remotePath": "图床上需要添加的远程路径，可区分不同md文件的图片，支持文件名<filename>和日期<YYYYMMDD>变量(dayjs)。 ",
+	"markdown-image-transfer.downloadTimeout": "每张图片下载的超时秒数",
+	"markdown-image-transfer.uploadTimeout": "每张图片上传的超时秒数",
+	"markdown-image-transfer.clipboardPath": "剪切板图片的路径和名称，支持文件名<filename>和日期<YYYYMMDD>变量(dayjs)。",
+	"markdown-image-transfer.urlFormatted": "图片URL格式是否转义，转义后有兼容性强可读性弱，插入本地图片时生效"
+}

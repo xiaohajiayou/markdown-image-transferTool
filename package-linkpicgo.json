@@ -1,0 +1,224 @@
+{
+  "name": "markdown-image-transfer",
+  "displayName": "Markdown Image Manage",
+  "description": "Download,Move,Clean,Upload,Paste,Covert markdown's images(MIM)下载,移动,清理,分析,上传,粘帖,转换MD文件中的图片",
+  "version": "0.1.0",
+  "publisher": "AustinYoung",
+  "icon": "icon.png",
+  "engines": {
+    "vscode": "^1.46.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:markdown-image-transfer.analyze",
+    "onCommand:markdown-image-transfer.clean",
+    "onCommand:markdown-image-transfer.cleanlink",
+    "onCommand:markdown-image-transfer.download",
+    "onCommand:markdown-image-transfer.upload",
+    "onCommand:markdown-image-transfer.uploadclip",
+    "onCommand:markdown-image-transfer.clipboardImage",
+    "onCommand:markdown-image-transfer.convertImageFormat",
+    "onCommand:markdown-image-transfer.convertImageLink",
+    "onCommand:markdown-image-transfer.move",
+    "onLanguage:markdown"
+  ],
+  "repository": {
+    "url": "https://gitee.com/pattazl/markdown-image-transfer"
+  },
+  "main": "./out/extension.js",
+  "contributes": {
+    "submenus": [
+      {
+        "id": "markdown-image-transfer.menulist",
+        "label": "%markdown-image-transfer.menuName%"
+      }
+    ],
+    "commands": [
+      {
+        "command": "markdown-image-transfer.analyze",
+        "title": "%markdown-image-transfer.menuAnalyze%"
+      },
+      {
+        "command": "markdown-image-transfer.clean",
+        "title": "%markdown-image-transfer.menuClean%"
+      },
+      {
+        "command": "markdown-image-transfer.download",
+        "title": "%markdown-image-transfer.menuDownload%"
+      },
+      {
+        "command": "markdown-image-transfer.upload",
+        "title": "%markdown-image-transfer.menuUpload%"
+      },{
+        "command": "markdown-image-transfer.uploadclip",
+        "title": "%markdown-image-transfer.menuUploadClip%"
+      },
+      {
+        "command": "markdown-image-transfer.moveLocalImage",
+        "title": "%markdown-image-transfer.menuMoveLocalImage%"
+      },
+      {
+        "command": "markdown-image-transfer.transfer",
+        "title": "%markdown-image-transfer.menuTransfer%"
+      },
+      {
+        "command": "markdown-image-transfer.cleanlink",
+        "title": "%markdown-image-transfer.menuCleanLink%"
+      },
+      {
+        "command": "markdown-image-transfer.clipboardImage",
+        "title": "%markdown-image-transfer.menuClipImage%"
+      },
+      {
+        "command": "markdown-image-transfer.convertImageFormat",
+        "title": "%markdown-image-transfer.menuConvertFormat%"
+      },
+      {
+        "command": "markdown-image-transfer.convertImageLink",
+        "title": "%markdown-image-transfer.menuConvertLink%"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "editorFocus && resourceLangId == markdown ",
+          "submenu": "markdown-image-transfer.menulist",
+          "group": "navigation"
+        }
+      ],
+      "markdown-image-transfer.menulist": [
+        {
+          "command": "markdown-image-transfer.analyze",
+          "group": "2_workspace"
+        },
+        {
+          "command": "markdown-image-transfer.clean",
+          "group": "2_workspace"
+        },
+        {
+          "command": "markdown-image-transfer.cleanlink",
+          "group": "2_workspace"
+        },
+        {
+          "command": "markdown-image-transfer.moveLocalImage",
+          "group": "2_workspace"
+        },
+        {
+          "command": "markdown-image-transfer.clipboardImage",
+          "group": "1_workspace"
+        },
+        {
+          "command": "markdown-image-transfer.convertImageFormat",
+          "group": "1_workspace"
+        },
+        {
+          "command": "markdown-image-transfer.convertImageLink",
+          "group": "1_workspace"
+        },
+        {
+          "command": "markdown-image-transfer.download",
+          "group": "3_workspace"
+        },
+        {
+          "command": "markdown-image-transfer.upload",
+          "group": "3_workspace"
+        },
+        {
+          "command": "markdown-image-transfer.uploadclip",
+          "group": "3_workspace"
+        }
+      ]
+    },
+    "configuration": {
+			"type": "object",
+			"title": "Markdown Image Manage",
+			"properties": {
+        "markdown-image-transfer.removeFolder": {
+					"type": "string",
+					"default": "md-img-remove",
+					"description": "%markdown-image-transfer.removeFolder%"
+				},
+				"markdown-image-transfer.hasBracket": {
+					"type": "string",
+					"default": "auto",
+					"enum": ["auto", "yes", "no"],
+					"description": "%markdown-image-transfer.hasBracket%"
+				},
+        "markdown-image-transfer.imageSaveFolder": {
+					"type": "string",
+					"default": "<filename>.assets",
+					"description": "%markdown-image-transfer.imageSaveFolder%"
+				},
+        "markdown-image-transfer.updateLink": {
+					"type": "boolean",
+					"default": true,
+					"description": "%markdown-image-transfer.updateLink%"
+				},
+        "markdown-image-transfer.skipSelectChange": {
+					"type": "boolean",
+					"default": false,
+					"description": "%markdown-image-transfer.skipSelectChange%"
+				},
+        "markdown-image-transfer.rename": {
+					"type": "boolean",
+					"default": true,
+					"description": "%markdown-image-transfer.rename%"
+				},
+        "markdown-image-transfer.remotePath": {
+					"type": "string",
+					"default": "<filename>",
+					"description": "%markdown-image-transfer.remotePath%"
+				},
+        "markdown-image-transfer.timeoutDownload": {
+					"type": "number",
+					"default": 10,
+					"description": "%markdown-image-transfer.downloadTimeout%"
+				},
+        "markdown-image-transfer.timeoutUpload": {
+					"type": "number",
+					"default": 10,
+					"description": "%markdown-image-transfer.uploadTimeout%"
+				},
+        "markdown-image-transfer.clipboardPath": {
+					"type": "string",
+					"default": "<filename>.assets/<YYMMDDHHmmss>.png",
+					"description": "%markdown-image-transfer.clipboardPath%"
+				},
+        "markdown-image-transfer.urlFormatted": {
+					"type": "boolean",
+					"default": true,
+					"description": "%markdown-image-transfer.urlFormatted%"
+				}
+			}
+		}
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "build": "node ./esbuild.config.js",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "keywords": [
+    "markdown",
+    "image",
+    "manage",
+    "picture",
+    "analyze",
+    "download",
+    "upload",
+    "move file",
+    "clean",
+    "covert","paste","clipboard",
+    "picgo",
+    "pic bed"
+  ],
+  "devDependencies": {
+  },
+  "dependencies": {
+  }
+}

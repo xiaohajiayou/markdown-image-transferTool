@@ -3,16 +3,17 @@
 
     "easy-markdown-migrate.menuAnalyze": "Analyze Image Links",
     "easy-markdown-migrate.menuMigrate": "Migrate Markdown File",
-    "easy-markdown-migrate.menuCrop": "Crop Select Content",
+    "easy-markdown-migrate.menuCopy": "Copy Select Content",
+    "easy-markdown-migrate.menuCut": "Cut Select Content",
     "easy-markdown-migrate.menuPaste": "Paste Select Content",
 
     "easy-markdown-migrate.menuDownload": "Download Images",
     "easy-markdown-migrate.menuUpload": "Upload Images",
-    "easy-markdown-migrate.menuMoveLocalImage": " Move  Select Images",
+    "easy-markdown-migrate.menuMoveImage": " Move  Select Images",
     "easy-markdown-migrate.menuConvert": " Absolute<->Relative",
 
 
-    "easy-markdown-migrate.menuClean": "Delete Select Images ",
+    "easy-markdown-migrate.menuDeleteImage": "Delete Select Images ",
     "easy-markdown-migrate.menuDrop": "Drop File to Trash",
 
 

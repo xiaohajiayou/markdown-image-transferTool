@@ -63,23 +63,24 @@ let docTextEditorAfterCopy: vscode.TextEditor | undefined; // 选择的MD文件
 let docPreSelectionAfterCopy: vscode.Selection | undefined; // 选择的范围
 
 // save images obj for paste
-let savedFileObj:{ local: string[], net: string[], invalid: string[], mapping: Record<string, any>, content: string } |undefined ;
-
+let cutFileObj:{ local: string[], net: string[], invalid: string[], mapping: Record<string, any>, content: string } |undefined ;
+let copyFileObj:{ local: string[], net: string[], invalid: string[], mapping: Record<string, any>, content: string } |undefined ;
 let openAfterMigrate = false; // 是否打开文件
 
 let myPicgo: any = null; // picgo对象
 let remote = ''; // 是否路径中不增加md文件名的文件夹，默认会自动增加文件夹以将不同md文件的图片分离开
 
 
-export async function cropContent(selectFlag:boolean= true) {
-    let cleanFlag = true;
+
+
+export async function copyContent(selectFlag:boolean= true) {
     let fileObj = getImages(selectFlag);
     if(fileObj.content == '')
         {
-            logger.error('No image cut, cannot paste.');
+            logger.error('No image copy, cannot paste.');
             return '';
         }
-    savedFileObj = fileObj;
+    copyFileObj = fileObj;
     
     let fileArr = fileObj.local; // 本地文件上传
     let fileMapping = fileObj.mapping; // 本地原始信息
@@ -93,7 +94,47 @@ export async function cropContent(selectFlag:boolean= true) {
     for(let file of uniArr)
     {
 
-        logger.info(`Image cropped : [${file}] ], ${count+1}/${len}`,false);
+        logger.info(`Image copied : [${file}] ], ${count+1}/${len}`,false);
+        try{
+
+            // fs.renameSync(file,newFile);
+            let b = escapeStringRegexp(fileMapping[file]);
+            var reg = new RegExp( '!\\[([^\\]]*)\\]\\('+ escapeStringRegexp(fileMapping[file]) +'\\)','ig');
+            //转为相对路径
+            // content =  ''; // 内容替换
+            count++;
+        }catch(e)
+        {
+            logger.error('move error:');
+            console.log(e);
+        }
+    }
+    await saveFile(content,count,selectFlag);
+    logger.success('Cut successfully.', true);
+}
+export async function cutContent(selectFlag:boolean= true) {
+    let cleanFlag = true;
+    let fileObj = getImages(selectFlag);
+    if(fileObj.content == '')
+        {
+            logger.error('No image cut, cannot paste.');
+            return '';
+        }
+    cutFileObj = fileObj;
+    
+    let fileArr = fileObj.local; // 本地文件上传
+    let fileMapping = fileObj.mapping; // 本地原始信息
+    let content = fileObj.content;
+    //downThread = thread;
+    // 对网络图片去重，不必每次下载
+    let set = new Set(); 
+    fileArr.forEach((item)=> set.add(item)); 
+    let uniArr:string[] = Array.from(set) as string[];
+    let count=0,len = uniArr.length;
+    for(let file of uniArr)
+    {
+
+        logger.info(`Image cutped : [${file}] ], ${count+1}/${len}`,false);
         try{
 
             // fs.renameSync(file,newFile);
@@ -109,7 +150,7 @@ export async function cropContent(selectFlag:boolean= true) {
         }
     }
     await saveFile(content,count,selectFlag,cleanFlag);
-    logger.success('Crop successfully.', true);
+    logger.success('Cut successfully.', true);
 }
 export async function pasteContent(selectFlag:boolean= true) {
     let mdFilePath = getMdPath();
@@ -119,11 +160,21 @@ export async function pasteContent(selectFlag:boolean= true) {
     }
     let mdFileFolder = path.dirname(mdFilePath);
     let imageTargetFolder = path.join(mdFileFolder, 'images');
-    if(savedFileObj == undefined){
-        logger.error('No image crop, cannot paste.');
-        return '';
+    let copyFileFlag = false; // 是否是复制
+    let fileObj;
+    if(cutFileObj == undefined&&copyFileObj == undefined) {
+        logger.error('No image copy or cut, cannot paste.');
+        return;
     }
-    let fileObj = savedFileObj;
+    if(cutFileObj!= undefined) {
+        copyFileFlag = false;
+        fileObj = cutFileObj;
+    }else if(copyFileObj!= undefined) {
+        copyFileFlag = true;
+        fileObj = copyFileObj;
+    }
+    if(fileObj == undefined) { return; }
+    // let fileObj = savedFileObj;
     let fileArr = fileObj.local; // 本地文件上传
     let fileMapping = fileObj.mapping; // 本地原始信息
     let content = fileObj.content;
@@ -154,7 +205,11 @@ export async function pasteContent(selectFlag:boolean= true) {
         logger.info(`[${file}] move to [${newFile}], ${count+1}/${len}`,false);
         try{
 
-            fs.renameSync(file,newFile);
+            if(copyFileFlag) {
+                fs.copyFileSync(file,newFile);
+            }else{
+                fs.renameSync(file,newFile);
+            }
             let b = escapeStringRegexp(fileMapping[file]);
             var reg = new RegExp( '!\\[([^\\]]*)\\]\\('+ escapeStringRegexp(fileMapping[file]) +'\\)','ig');
             //转为相对路径

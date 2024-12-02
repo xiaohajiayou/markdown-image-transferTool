@@ -7,7 +7,7 @@ import {vscDropFile} from './drop';
 import {vscMigrate} from './migrate';
 import {vscMove} from './moveImg';
 import {vscDeleteImgs} from './deleteImg';
-import { vscPaste,vscCrop  } from './copyPaste';
+import { vscPaste,vscCut,vscCopy  } from './copyPaste';
 import { vscConvertUrl } from './convertUrl';
 import { vscUpload } from './uploadImgs';
 // this method is called when your extension is activated
@@ -42,9 +42,13 @@ export function activate(context: vscode.ExtensionContext) {
 		if(!initPara()){return;} // 参数可能更新，重新从配置中获取初始化参数
 		vscMigrate();
 	})
-	let dispCrop = vscode.commands.registerCommand("easy-markdown-migrate.crop", async () => {
+	let dispCopy = vscode.commands.registerCommand("easy-markdown-migrate.copy", async () => {
 		if(!initPara()){return;} // 参数可能更新，重新从配置中获取初始化参数
-		vscCrop();
+		vscCopy();
+	})
+	let dispCut = vscode.commands.registerCommand("easy-markdown-migrate.cut", async () => {
+		if(!initPara()){return;} // 参数可能更新，重新从配置中获取初始化参数
+		vscCut();
 	})
 	let dispPaste = vscode.commands.registerCommand("easy-markdown-migrate.paste", async () => {
 		if(!initPara()){return;} // 参数可能更新，重新从配置中获取初始化参数
@@ -61,7 +65,7 @@ export function activate(context: vscode.ExtensionContext) {
 		vscUpload();
 	})
 
-	let dispMove = vscode.commands.registerCommand("easy-markdown-migrate.moveLocalImage", async () => {
+	let dispMove = vscode.commands.registerCommand("easy-markdown-migrate.moveImage", async () => {
 		if(!initPara()){return;} // 参数可能更新，重新从配置中获取初始化参数
 		vscMove();
 	})
@@ -71,7 +75,7 @@ export function activate(context: vscode.ExtensionContext) {
 	})
 
 
-	let dispClean = vscode.commands.registerCommand("easy-markdown-migrate.clean", async () => {
+	let dispClean = vscode.commands.registerCommand("easy-markdown-migrate.deleteImage", async () => {
 		if(!initPara()){return;} // 参数可能更新，重新从配置中获取初始化参数
 		vscDeleteImgs();
 	})
@@ -83,7 +87,8 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(dispAnalyze);
 	context.subscriptions.push(dispMoveAll);
-	context.subscriptions.push(dispCrop);
+	context.subscriptions.push(dispCopy);
+	context.subscriptions.push(dispCut);
 	context.subscriptions.push(dispPaste);
 
 	context.subscriptions.push(dispDownload);
